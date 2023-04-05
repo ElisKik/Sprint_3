@@ -20,11 +20,15 @@
    ```
 
 5. Запустить virtual environment:
+
    - MacOS/Linux:
+
      ```bash
      source .venv/bin/activate
      ```
+
    - Windows
+
      ```bash
      .venv\Scripts\activate
      ```
@@ -49,6 +53,20 @@
      ```
 
 8. Убедиться в том, что все тесты прошлись.
+
+## Переменные среды
+
+Запуск тестов можно сконфигурировать, указав значения переменных среды для команды запуска тестов (MacOS/Linux):
+
+```bash
+ENV_VAR=value pytest -v tests
+```
+
+Доступные переменные:
+
+- `SELENIUM_DRIVER=firefox`
+- `SELENIUM_HEADLESS=0`
+- `SELENIUM_MAXIMIZED=0`
 
 ## Реализованные тесты
 

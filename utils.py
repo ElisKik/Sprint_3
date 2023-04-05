@@ -2,20 +2,11 @@
 Common functions reusable in several tests.
 """
 
-import time
-
-from typing import Dict
-
-from selenium.webdriver import Chrome as WebDriver
-
-from locators import *
-from waits import *
-from javascript import *
-from constants import *
+from webdriver_resolver import WebDriver
 
 from account import RegisteredAccount
-
-import fakes
+from fakes import get_name, get_email, get_password
+from urls import Urls
 
 def register_account(webdriver: WebDriver) -> RegisteredAccount:
     """
@@ -24,18 +15,17 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
     Performs registration on target site.
     """
 
-    name = fakes.get_name()
-    email = fakes.get_email()
-    password = fakes.get_password()
+    name = get_name()
+    email = get_email()
+    password = get_password()
 
     account = RegisteredAccount(webdriver, name, email, password)
 
     return account
 
 def go_to_base(webdriver: WebDriver):
-    webdriver.get(BASE_URL)
-    wait_overlay_hidden(webdriver)
+    """
+    Opens home page of target site.
+    """
 
-def wait_overlay_hidden(webdriver: WebDriver):
-    time.sleep(1)
-    wait_invisible(webdriver, Locators.Main.OVERLAY)
+    webdriver.get(Urls.BASE)

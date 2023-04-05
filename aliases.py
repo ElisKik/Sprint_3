@@ -1,4 +1,4 @@
-from typing import Tuple, Union, List, Any
+from typing import Tuple
 
 Locator = Tuple[str, str]
 """

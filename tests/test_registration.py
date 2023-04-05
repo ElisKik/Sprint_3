@@ -1,16 +1,21 @@
-from selenium.webdriver import Chrome as WebDriver
+from webdriver_resolver import WebDriver
 
-from locators import *
-from waits import *
-from javascript import *
-from constants import *
-from asserts import *
-from utils import *
-from utils import *
+from asserts import assert_element_exists
+from constants import PASSWORD_LENGTH_MIN
+from fakes import get_name, get_email, get_password
+from javascript import js_click, js_focus
+from locators import Locators
+from urls import Urls
+from utils import go_to_base, register_account
+from waits import wait_page_loaded, wait_send_keys
 
 def test_registration(webdriver: WebDriver):
+    url_before = webdriver.current_url
     register_account(webdriver)
-    assert webdriver.current_url == f'{BASE_URL}/login'
+
+    wait_page_loaded(webdriver, url_before)
+
+    assert webdriver.current_url == f'{Urls.BASE}/{Urls.LOGIN}'
 
 def test_registration_short_password_failed(webdriver: WebDriver):
     go_to_base(webdriver)
@@ -18,15 +23,17 @@ def test_registration_short_password_failed(webdriver: WebDriver):
     js_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
     js_click(webdriver, Locators.Account.ANCHOR_REGISTER)
 
-    value_name = fakes.get_name()
-    value_email = fakes.get_email()
-    value_password = fakes.get_password()
+    value_name = get_name()
+    value_email = get_email()
+    value_password = get_password()
 
-    value_password = value_password[0:5]
+    invalid_password_length = PASSWORD_LENGTH_MIN - 1
 
-    js_send_keys_focused(webdriver, Locators.Registration.INPUT_NAME, value_name)
-    js_send_keys_focused(webdriver, Locators.Registration.INPUT_EMAIL, value_email)
-    js_send_keys_focused(webdriver, Locators.Registration.INPUT_PASSWORD, value_password)
+    value_password = value_password[0:invalid_password_length]
+
+    wait_send_keys(webdriver, Locators.Registration.INPUT_NAME, value_name)
+    wait_send_keys(webdriver, Locators.Registration.INPUT_EMAIL, value_email)
+    wait_send_keys(webdriver, Locators.Registration.INPUT_PASSWORD, value_password)
 
     js_focus(webdriver, Locators.Registration.BUTTON_REGISTER)
 
@@ -35,5 +42,5 @@ def test_registration_short_password_failed(webdriver: WebDriver):
         Locators.Registration.PARAGRAPH_PASSWORD_ERROR,
         'Invalid password caption was not found')
 
-    assert webdriver.current_url == f'{BASE_URL}/register', \
+    assert webdriver.current_url == f'{Urls.BASE}/{Urls.REGISTER}', \
            'Page changed on invalid password entered'

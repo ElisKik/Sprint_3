@@ -1,13 +1,18 @@
 """
-Project-specific constants.
+Tests-specific constants.
 """
 
-BASE_URL = 'https://stellarburgers.nomoreparties.site'
-"""
-URL scheme and hostname of target site.
-"""
-
-TIMEOUT = 30
+TIMEOUT = 10
 """
 Common timeout value.
+"""
+
+WAIT_POLL_FREQUENCY = 0.25
+"""
+Common poll frequency of checking for awaited element.
+"""
+
+PASSWORD_LENGTH_MIN = 6
+"""
+Minimum acceptable length of the password.
 """

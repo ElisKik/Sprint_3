@@ -2,14 +2,12 @@
 
 import pytest
 
-from selenium.webdriver import Chrome as WebDriver
+from webdriver_resolver import WebDriver
 
-from locators import *
-from waits import *
-from javascript import *
-from constants import *
-from asserts import *
-from utils import *
+from asserts import assert_element_exists
+from javascript import js_click, js_check_scrolled_into_view, js_wait_scrolled_into_view
+from locators import Locators
+from utils import go_to_base
 
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
     go_to_base(webdriver)
@@ -52,7 +50,9 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group):
         webdriver,
         Locators.Constructor.get_span_ingredient_group(ingredient_group))
 
-    time.sleep(1)
+    js_wait_scrolled_into_view(
+        webdriver,
+        Locators.Constructor.get_title_ingredient_group(ingredient_group))
 
     assert js_check_scrolled_into_view(
         webdriver,

@@ -26,7 +26,7 @@ class Locators:
         Locators of main page.
         """
 
-        OVERLAY: Locator = (By.XPATH, './/section[starts-with(@class,"Modal_modal")]')
+        OVERLAY: Locator = (By.XPATH, './/div[starts-with(@class,"Modal_modal_overlay")]')
         """
         Overlay that is displayed on page loading to be completed.
         """
@@ -63,7 +63,6 @@ class Locators:
 
     class Registration:
         INPUT_NAME: Locator = (By.XPATH, './/form/fieldset[1]/div/div/input')
-        ANCHOR_REGISTER: Locator = (By.XPATH, './/a[@href="/register"]')
         """
         Input field for real name of user.
         """

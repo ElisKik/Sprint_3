@@ -6,15 +6,37 @@ Current implementation: via :class:`fake.Faker`
 
 from faker import Faker
 
-faker = Faker('ru_RU')
+from constants import PASSWORD_LENGTH_MIN
+
+faker_common = Faker('ru_RU')
+faker_passwords = Faker()
 
 def get_email() -> str:
-    return faker.email()
+    """
+    Gets a random email address
+    with `ru_RU` locale.
+
+    Using :class:`fake.Faker`
+    """
+
+    return faker_common.email()
 
 def get_name() -> str:
-    faker = Faker('ru_RU')
-    return faker.name()
+    """
+    Gets a random real name of user
+    with `ru_RU` locale.
+
+    Using :class:`fake.Faker`
+    """
+
+    return faker_common.name()
 
 def get_password() -> str:
-    faker = Faker()
-    return faker.password()
+    """
+    Gets a random real name for the user
+    with unspecified locale.
+
+    Using :class:`fake.Faker`
+    """
+
+    return faker_passwords.password(length=PASSWORD_LENGTH_MIN)
