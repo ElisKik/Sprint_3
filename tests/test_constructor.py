@@ -4,7 +4,6 @@ import pytest
 
 from selenium.webdriver import Chrome as WebDriver
 
-from javascript import js_click
 from locators import Locators
 from urls import Urls
 from waits import wait_visible
@@ -12,7 +11,7 @@ from waits import wait_visible
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
 
-    js_click(webdriver, Locators.Main.ANCHOR_LOGO)
+    webdriver.find_element(*Locators.Main.ANCHOR_LOGO).click()
 
     found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
 
@@ -22,7 +21,7 @@ def test_go_to_constructor_from_logo(webdriver: WebDriver):
 def test_go_to_constructor_from_header(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
 
-    js_click(webdriver, Locators.Header.ANCHOR_CONSTRUCTOR)
+    webdriver.find_element(*Locators.Header.ANCHOR_CONSTRUCTOR).click()
 
     found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
 
@@ -44,11 +43,12 @@ def test_go_to_constructor_from_header(webdriver: WebDriver):
 def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
     webdriver.get(Urls.BASE)
 
-    js_click(webdriver, Locators.Header.ANCHOR_CONSTRUCTOR)
+    webdriver.find_element(*Locators.Header.ANCHOR_CONSTRUCTOR).click()
 
-    js_click(
-        webdriver,
-        Locators.Constructor.get_span_ingredient_group(ingredient_group))
+    selected_ingredient_groups = webdriver.find_elements(*Locators.Constructor.get_div_selected_ingredient_group(ingredient_group))
+
+    if len(selected_ingredient_groups) == 0:
+        webdriver.find_element(*Locators.Constructor.get_span_ingredient_group(ingredient_group)).click()
 
     ingredient_group_visible = wait_visible(
         webdriver,

@@ -2,7 +2,6 @@ from selenium.webdriver import Chrome as WebDriver
 
 from constants import PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
-from javascript import js_click
 from locators import Locators
 from urls import Urls
 from utils import register_account
@@ -19,8 +18,8 @@ def test_registration(webdriver: WebDriver):
 def test_registration_short_password_failed(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
 
-    js_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
-    js_click(webdriver, Locators.Account.ANCHOR_REGISTER)
+    webdriver.find_element(*Locators.Main.ANCHOR_ACCOUNT).click()
+    webdriver.find_element(*Locators.Account.ANCHOR_REGISTER).click()
 
     value_name = get_name()
     value_email = get_email()

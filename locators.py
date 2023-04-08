@@ -128,6 +128,13 @@ class Locators:
         """
 
         @staticmethod
+        def get_div_selected_ingredient_group(ingredient_group: str) -> Locator:
+            """
+            Tab container of currently selected ingredient group.
+            """
+            return (By.XPATH, f'.//div[contains(@class, "current")]//span[text()="{ingredient_group}"]')
+
+        @staticmethod
         def get_span_ingredient_group(ingredient_group: str) -> Locator:
             """
             Tab of ingredient group.
