@@ -4,30 +4,30 @@ import pytest
 
 from selenium.webdriver import Chrome as WebDriver
 
-from asserts import assert_element_exists
 from javascript import js_click, js_check_scrolled_into_view, js_wait_scrolled_into_view
 from locators import Locators
-from utils import go_to_base
+from urls import Urls
 
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
-    go_to_base(webdriver)
+    webdriver.get(Urls.BASE)
 
     js_click(webdriver, Locators.Main.ANCHOR_LOGO)
 
-    assert_element_exists(
-        webdriver,
-        Locators.Constructor.CONTAINER_INGREDIENTS,
-        'Ingredients container was not found')
+    found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
+
+    assert len(found_elements) > 0, 'Ingredients container was not found'
+    assert len(found_elements) == 1, 'Ambiguous results of searching for ingredients container'
 
 def test_go_to_constructor_from_header(webdriver: WebDriver):
-    go_to_base(webdriver)
+    webdriver.get(Urls.BASE)
 
     js_click(webdriver, Locators.Header.ANCHOR_CONSTRUCTOR)
 
-    assert_element_exists(
-        webdriver,
-        Locators.Constructor.CONTAINER_INGREDIENTS,
-        'Ingredients container was not found')
+    found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
+
+    assert len(found_elements) > 0, 'Ingredients container was not found'
+    assert len(found_elements) == 1, 'Ambiguous results of searching for ingredients container'
+
 
 @pytest.mark.parametrize(
     'ingredient_group',
@@ -42,7 +42,7 @@ def test_go_to_constructor_from_header(webdriver: WebDriver):
         'toppings',
     ])
 def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group):
-    go_to_base(webdriver)
+    webdriver.get(Urls.BASE)
 
     js_click(webdriver, Locators.Header.ANCHOR_CONSTRUCTOR)
 

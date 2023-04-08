@@ -1,6 +1,5 @@
 from selenium.webdriver import Chrome as WebDriver
 
-from asserts import assert_element_exists
 from constants import PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
 from javascript import js_click, js_focus
@@ -37,10 +36,10 @@ def test_registration_short_password_failed(webdriver: WebDriver):
 
     js_focus(webdriver, Locators.Registration.BUTTON_REGISTER)
 
-    assert_element_exists(
-        webdriver,
-        Locators.Registration.PARAGRAPH_PASSWORD_ERROR,
-        'Invalid password caption was not found')
+    found_elements = webdriver.find_elements(*Locators.Registration.PARAGRAPH_PASSWORD_ERROR)
+
+    assert len(found_elements) > 0, 'Invalid password caption was not found'
+    assert len(found_elements) == 1, 'Ambiguous results of searching for invalid password caption'
 
     assert webdriver.current_url == f'{Urls.BASE}/{Urls.REGISTER}', \
            'Page changed on invalid password entered'

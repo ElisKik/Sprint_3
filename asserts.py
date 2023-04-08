@@ -4,10 +4,7 @@ Common functions reusable in several tests.
 
 from selenium.webdriver import Chrome as WebDriver
 
-from selenium.common.exceptions import NoSuchElementException
-
 from account import RegisteredAccount
-from aliases import Locator
 from locators import Locators
 from urls import Urls
 from waits import wait_click, wait_obscured_click, wait_send_keys, wait_page_loaded
@@ -42,13 +39,3 @@ def assert_login(webdriver: WebDriver, registered_account: RegisteredAccount):
 
     assert webdriver.current_url == url_expected, \
            f'Login with registered account has failed, URL\nexpected: {url_expected},\nactual: {url_actual}'
-
-def assert_element_exists(webdriver: WebDriver, locator: Locator, message: str):
-    """
-    Checks for element exists and raises exception if not.
-    """
-
-    try:
-        webdriver.find_element(*locator)
-    except NoSuchElementException as exception:
-        raise AssertionError(message, exception)
