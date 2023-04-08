@@ -2,11 +2,11 @@ from selenium.webdriver import Chrome as WebDriver
 
 from constants import PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
-from javascript import js_click, js_focus
+from javascript import js_click
 from locators import Locators
 from urls import Urls
 from utils import register_account
-from waits import wait_page_loaded, wait_send_keys
+from waits import wait_find_elements, wait_page_loaded, wait_send_keys
 
 def test_registration(webdriver: WebDriver):
     url_before = webdriver.current_url
@@ -34,9 +34,9 @@ def test_registration_short_password_failed(webdriver: WebDriver):
     wait_send_keys(webdriver, Locators.Registration.INPUT_EMAIL, value_email)
     wait_send_keys(webdriver, Locators.Registration.INPUT_PASSWORD, value_password)
 
-    js_focus(webdriver, Locators.Registration.BUTTON_REGISTER)
+    webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
-    found_elements = webdriver.find_elements(*Locators.Registration.PARAGRAPH_PASSWORD_ERROR)
+    found_elements = wait_find_elements(webdriver, Locators.Registration.PARAGRAPH_PASSWORD_ERROR)
 
     assert len(found_elements) > 0, 'Invalid password caption was not found'
     assert len(found_elements) == 1, 'Ambiguous results of searching for invalid password caption'

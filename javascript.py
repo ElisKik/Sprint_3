@@ -54,16 +54,6 @@ def __get_js_function_call(function_name: str, returns: bool = False) -> str:
 
     return source
 
-def js_focus(webdriver: WebDriver, locator: Locator) -> None:
-    """
-    Waits for an element at given locator to be present
-    and performs `focus()` using JavaScript.
-    """
-
-    wait = WebDriverWait(webdriver, TIMEOUT)
-    element = wait.until(expected_conditions.presence_of_element_located(locator))
-    webdriver.execute_script('arguments[0].focus();', element)
-
 def js_click(webdriver: WebDriver, locator: Locator) -> None:
     """
     Waits for an element at given locator to be present
