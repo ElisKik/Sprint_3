@@ -3,7 +3,7 @@ from selenium.webdriver import Chrome as WebDriver
 from locators import Locators
 from urls import Urls
 from utils import login, register_account
-from waits import wait_obscured_click, wait_page_loaded
+from waits import wait_click, wait_page_loaded
 
 def test_logout(webdriver: WebDriver):
     registered_account = register_account(webdriver)
@@ -20,7 +20,7 @@ def test_logout(webdriver: WebDriver):
 
     url_before = webdriver.current_url
 
-    wait_obscured_click(webdriver, Locators.Profile.BUTTON_LOGOUT)
+    wait_click(webdriver, Locators.Profile.BUTTON_LOGOUT)
 
     if webdriver.current_url == url_before:
         wait_page_loaded(webdriver, url_before)

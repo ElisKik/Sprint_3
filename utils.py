@@ -8,7 +8,7 @@ from account import RegisteredAccount
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
-from waits import wait_page_loaded, wait_click, wait_obscured_click
+from waits import wait_click, wait_page_loaded
 
 def register_account(webdriver: WebDriver) -> RegisteredAccount:
     """
@@ -51,7 +51,7 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
 
     url_before = webdriver.current_url
 
-    wait_obscured_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
+    wait_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
 
     url_before_redirect = webdriver.current_url
 

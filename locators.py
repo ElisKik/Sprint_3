@@ -26,11 +26,6 @@ class Locators:
         Locators of main page.
         """
 
-        OVERLAY: Locator = (By.XPATH, './/div[starts-with(@class,"Modal_modal_overlay")]')
-        """
-        Overlay that is displayed on page loading to be completed.
-        """
-
         ANCHOR_ACCOUNT: Locator = (By.XPATH, './/a[@href="/account"]')
         """
         Link leads to account login page or already registered profile.

@@ -47,6 +47,7 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
 
     selected_ingredient_groups = webdriver.find_elements(*Locators.Constructor.get_div_selected_ingredient_group(ingredient_group))
 
+    # Skip clicking on already selected ingredient group tab:
     if len(selected_ingredient_groups) == 0:
         webdriver.find_element(*Locators.Constructor.get_span_ingredient_group(ingredient_group)).click()
 
