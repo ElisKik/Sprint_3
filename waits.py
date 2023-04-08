@@ -20,7 +20,7 @@ def wait_click(webdriver: WebDriver, locator: Locator) -> None:
     and then `click()` via WebDriver.
     """
 
-    wait = __wait_factory(webdriver)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     wait.until(expected_conditions.presence_of_element_located(locator)).click()
 
 def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
@@ -30,7 +30,7 @@ def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     """
 
     if webdriver.current_url == current_url:
-        wait = __wait_factory(webdriver)
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
         wait.until(expected_conditions.url_changes(current_url))
 
 def wait_visible(webdriver: WebDriver, locator: Locator) -> bool:
@@ -39,7 +39,7 @@ def wait_visible(webdriver: WebDriver, locator: Locator) -> bool:
     via :class:`expected_conditions` and returns the result.
     """
 
-    wait = __wait_factory(webdriver)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     is_visible = wait.until(expected_conditions.visibility_of_element_located(locator))
 
     return is_visible
@@ -50,15 +50,7 @@ def wait_find_elements(webdriver: WebDriver, locator: Locator) -> List[WebElemen
     via :class:`expected_conditions` and returns the result.
     """
 
-    wait = __wait_factory(webdriver)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     elements = wait.until(expected_conditions.presence_of_all_elements_located(locator))
 
     return elements
-
-def __wait_factory(webdriver: WebDriver) -> WebDriverWait:
-    """
-    Creates instance of :class:`WebDriverWait` with
-    constants `TIMEOUT` and `WAIT_POLL_FREQUENCY`
-    specified in this project.
-    """
-    return WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
