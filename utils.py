@@ -9,7 +9,7 @@ from fakes import get_name, get_email, get_password
 from javascript import js_click
 from locators import Locators
 from urls import Urls
-from waits import wait_page_loaded, wait_send_keys, wait_click, wait_obscured_click, wait_send_keys, wait_page_loaded
+from waits import wait_page_loaded, wait_click, wait_obscured_click
 
 def register_account(webdriver: WebDriver) -> RegisteredAccount:
     """
@@ -27,9 +27,9 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
     js_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
     js_click(webdriver, Locators.Account.ANCHOR_REGISTER)
 
-    wait_send_keys(webdriver, Locators.Registration.INPUT_NAME, name)
-    wait_send_keys(webdriver, Locators.Registration.INPUT_EMAIL, email)
-    wait_send_keys(webdriver, Locators.Registration.INPUT_PASSWORD, password)
+    webdriver.find_element(*Locators.Registration.INPUT_NAME).send_keys(name)
+    webdriver.find_element(*Locators.Registration.INPUT_EMAIL).send_keys(email)
+    webdriver.find_element(*Locators.Registration.INPUT_PASSWORD).send_keys(password)
 
     url_before = webdriver.current_url
 
@@ -45,8 +45,8 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
     Performs login with given object of registered account.
     """
 
-    wait_send_keys(webdriver, Locators.Login.INPUT_EMAIL, registered_account.email)
-    wait_send_keys(webdriver, Locators.Login.INPUT_PASSWORD, registered_account.password)
+    webdriver.find_element(*Locators.Login.INPUT_EMAIL).send_keys(registered_account.email)
+    webdriver.find_element(*Locators.Login.INPUT_PASSWORD).send_keys(registered_account.password)
 
     wait_click(webdriver, Locators.Login.BUTTON_LOGIN)
 

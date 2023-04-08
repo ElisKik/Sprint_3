@@ -44,17 +44,6 @@ def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     wait = __wait_factory(webdriver)
     wait.until(expected_conditions.url_changes(current_url))
 
-def wait_send_keys(webdriver: WebDriver, locator: Locator, keys: str):
-    """
-    Waits for an element at given locator to be present
-    and performs `send_keys()` via WebDriver.
-    """
-
-    wait = WebDriverWait(webdriver, TIMEOUT)
-    element = wait.until(expected_conditions.element_to_be_clickable(locator))
-
-    element.send_keys(keys)
-
 def __wait_factory(webdriver: WebDriver) -> WebDriverWait:
     """
     Creates instance of :class:`WebDriverWait` with

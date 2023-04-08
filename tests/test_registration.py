@@ -6,7 +6,7 @@ from javascript import js_click
 from locators import Locators
 from urls import Urls
 from utils import register_account
-from waits import wait_find_elements, wait_page_loaded, wait_send_keys
+from waits import wait_find_elements, wait_page_loaded
 
 def test_registration(webdriver: WebDriver):
     url_before = webdriver.current_url
@@ -30,9 +30,9 @@ def test_registration_short_password_failed(webdriver: WebDriver):
 
     value_password = value_password[0:invalid_password_length]
 
-    wait_send_keys(webdriver, Locators.Registration.INPUT_NAME, value_name)
-    wait_send_keys(webdriver, Locators.Registration.INPUT_EMAIL, value_email)
-    wait_send_keys(webdriver, Locators.Registration.INPUT_PASSWORD, value_password)
+    webdriver.find_element(*Locators.Registration.INPUT_NAME).send_keys(value_name)
+    webdriver.find_element(*Locators.Registration.INPUT_EMAIL).send_keys(value_email)
+    webdriver.find_element(*Locators.Registration.INPUT_PASSWORD).send_keys(value_password)
 
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
