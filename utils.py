@@ -12,7 +12,6 @@ from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
-from waits import wait_page_loaded
 
 def register_account(webdriver: WebDriver) -> RegisteredAccount:
     """
@@ -38,7 +37,9 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
 
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
-    wait_page_loaded(webdriver, url_before)
+    if webdriver.current_url == url_before:
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait.until(expected_conditions.url_changes(url_before))
 
     return RegisteredAccount(name, email, password)
 
@@ -53,17 +54,19 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
     wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     wait.until(expected_conditions.presence_of_element_located(Locators.Login.BUTTON_LOGIN)).click()
 
-    url_before = webdriver.current_url
-
     wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
-    url_before_redirect = webdriver.current_url
+    url_before = webdriver.current_url
 
-    wait_page_loaded(webdriver, url_before)
+    if webdriver.current_url == url_before:
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait.until(expected_conditions.url_changes(url_before))
 
+    url_before = webdriver.current_url
     url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
 
     # Handle possible redirect from /account to account/profile
-    if not url_before_redirect == url_expected:
-        wait_page_loaded(webdriver, url_before_redirect)
+    if webdriver.current_url == url_before and not url_before == url_expected:
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait.until(expected_conditions.url_changes(url_before))

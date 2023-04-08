@@ -7,7 +7,6 @@ from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 from locators import Locators
 from urls import Urls
 from utils import login, register_account
-from waits import wait_page_loaded
 
 def test_logout(webdriver: WebDriver):
     registered_account = register_account(webdriver)
@@ -27,7 +26,9 @@ def test_logout(webdriver: WebDriver):
     wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
     wait.until(expected_conditions.presence_of_element_located(Locators.Profile.BUTTON_LOGOUT)).click()
 
-    wait_page_loaded(webdriver, url_before)
+    if webdriver.current_url == url_before:
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait.until(expected_conditions.url_changes(url_before))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url

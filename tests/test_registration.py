@@ -8,13 +8,14 @@ from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
 from utils import register_account
-from waits import wait_page_loaded
 
 def test_registration(webdriver: WebDriver):
     url_before = webdriver.current_url
     register_account(webdriver)
 
-    wait_page_loaded(webdriver, url_before)
+    if webdriver.current_url == url_before:
+        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait.until(expected_conditions.url_changes(url_before))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url
