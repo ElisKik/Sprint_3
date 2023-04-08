@@ -39,10 +39,3 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
         wait_page_loaded(webdriver, url_before)
 
     return RegisteredAccount(name, email, password)
-
-def go_to_base(webdriver: WebDriver):
-    """
-    Opens home page of target site.
-    """
-
-    webdriver.get(Urls.BASE)

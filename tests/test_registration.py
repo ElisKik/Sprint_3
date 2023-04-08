@@ -6,7 +6,7 @@ from fakes import get_name, get_email, get_password
 from javascript import js_click, js_focus
 from locators import Locators
 from urls import Urls
-from utils import go_to_base, register_account
+from utils import register_account
 from waits import wait_page_loaded, wait_send_keys
 
 def test_registration(webdriver: WebDriver):
@@ -18,7 +18,7 @@ def test_registration(webdriver: WebDriver):
     assert webdriver.current_url == f'{Urls.BASE}/{Urls.LOGIN}'
 
 def test_registration_short_password_failed(webdriver: WebDriver):
-    go_to_base(webdriver)
+    webdriver.get(Urls.BASE)
 
     js_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
     js_click(webdriver, Locators.Account.ANCHOR_REGISTER)
