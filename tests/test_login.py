@@ -3,7 +3,7 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from constants import TIMEOUT, WAIT_POLL_FREQUENCY
+from constants import TIMEOUT
 from locators import Locators
 from urls import Urls
 from utils import register_account, login
@@ -13,7 +13,7 @@ def test_login_main(webdriver: WebDriver):
 
     webdriver.get(Urls.BASE)
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.BUTTON_LOGIN)).click()
 
     login(webdriver, registered_account)
@@ -31,7 +31,7 @@ def test_login_account(webdriver: WebDriver):
 
     webdriver.get(Urls.BASE)
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
     login(webdriver, registered_account)
@@ -60,13 +60,13 @@ def test_login_registration(webdriver: WebDriver):
 def test_login_password_recovery(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_RECOVER_PASSWORD)).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.PasswordRecovery.ANCHOR_LOGIN)).click()
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'

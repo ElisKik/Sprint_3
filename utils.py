@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from account import RegisteredAccount
-from constants import TIMEOUT, WAIT_POLL_FREQUENCY
+from constants import TIMEOUT
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
@@ -38,7 +38,7 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
     if webdriver.current_url == url_before:
-        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait = WebDriverWait(webdriver, TIMEOUT)
         wait.until(expected_conditions.url_changes(url_before))
 
     return RegisteredAccount(name, email, password)
@@ -51,16 +51,16 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
     webdriver.find_element(*Locators.Login.INPUT_EMAIL).send_keys(registered_account.email)
     webdriver.find_element(*Locators.Login.INPUT_PASSWORD).send_keys(registered_account.password)
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Login.BUTTON_LOGIN)).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
     url_before = webdriver.current_url
 
     if webdriver.current_url == url_before:
-        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait = WebDriverWait(webdriver, TIMEOUT)
         wait.until(expected_conditions.url_changes(url_before))
 
     url_before = webdriver.current_url
@@ -68,5 +68,5 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
 
     # Handle possible redirect from /account to account/profile
     if webdriver.current_url == url_before and not url_before == url_expected:
-        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait = WebDriverWait(webdriver, TIMEOUT)
         wait.until(expected_conditions.url_changes(url_before))

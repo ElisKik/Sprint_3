@@ -3,7 +3,7 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from constants import TIMEOUT, WAIT_POLL_FREQUENCY, PASSWORD_LENGTH_MIN
+from constants import TIMEOUT, PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
@@ -14,7 +14,7 @@ def test_registration(webdriver: WebDriver):
     register_account(webdriver)
 
     if webdriver.current_url == url_before:
-        wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+        wait = WebDriverWait(webdriver, TIMEOUT)
         wait.until(expected_conditions.url_changes(url_before))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
@@ -45,7 +45,7 @@ def test_registration_short_password_failed(webdriver: WebDriver):
 
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
 
     found_elements = wait.until(
         expected_conditions.presence_of_all_elements_located(

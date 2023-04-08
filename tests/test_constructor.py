@@ -7,7 +7,7 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from constants import TIMEOUT, WAIT_POLL_FREQUENCY
+from constants import TIMEOUT
 from locators import Locators
 from urls import Urls
 
@@ -54,7 +54,7 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
     if len(selected_ingredient_groups) == 0:
         webdriver.find_element(*Locators.Constructor.get_span_ingredient_group(ingredient_group)).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait = WebDriverWait(webdriver, TIMEOUT)
 
     ingredient_group_visible = wait.until(
         expected_conditions.visibility_of_element_located(
