@@ -55,4 +55,4 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
         webdriver,
         Locators.Constructor.get_title_ingredient_group(ingredient_group))
 
-    assert ingredient_group_visible
+    assert ingredient_group_visible, f'Selected ingredient group {ingredient_group} is not visible'

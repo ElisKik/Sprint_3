@@ -13,7 +13,13 @@ def test_registration(webdriver: WebDriver):
 
     wait_page_loaded(webdriver, url_before)
 
-    assert webdriver.current_url == f'{Urls.BASE}/{Urls.LOGIN}'
+    url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
+    url_actual = webdriver.current_url
+
+    assert url_actual == url_expected, \
+           f'Registration has failed, URL\
+            \nexpected: {url_expected},\
+            \nactual: {url_actual}'
 
 def test_registration_short_password_failed(webdriver: WebDriver):
     webdriver.get(Urls.BASE)

@@ -59,4 +59,10 @@ def test_login_password_recovery(webdriver: WebDriver):
     wait_click(webdriver, Locators.Account.ANCHOR_RECOVER_PASSWORD)
     wait_click(webdriver, Locators.PasswordRecovery.ANCHOR_LOGIN)
 
-    assert webdriver.current_url == f'{Urls.BASE}/{Urls.LOGIN}'
+    url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
+    url_actual = webdriver.current_url
+
+    assert url_actual == url_expected, \
+           f'Login from password recovery page has failed, URL\
+            \nexpected: {url_expected},\
+            \nactual: {url_actual}'
