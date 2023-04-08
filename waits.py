@@ -36,8 +36,7 @@ def wait_obscured_click(webdriver: WebDriver, locator: Locator) -> None:
 
 def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     """
-    Waits for an element at given locator to be present
-    and then waits for current URL of driver being changed
+    Waits for current URL of driver being changed
     in comparison to `current_url` given as an argument.
     """
 
