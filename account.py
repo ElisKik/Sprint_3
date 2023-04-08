@@ -3,10 +3,8 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from constants import TIMEOUT
 from fakes import get_name, get_email, get_password
 from locators import Locators
-from urls import Urls
 
 class RegisteredAccount:
     """
@@ -23,8 +21,9 @@ class Account:
     Provides functions for registration and login of account.
     """
 
-    def __init__(self, webdriver: WebDriver):
+    def __init__(self, webdriver: WebDriver, wait: WebDriverWait):
         self.webdriver = webdriver
+        self.wait = wait
 
     def register(self) -> RegisteredAccount:
         """
@@ -53,18 +52,13 @@ class Account:
         Performs login with given object of registered account.
         """
 
-        wait = WebDriverWait(self.webdriver, TIMEOUT)
-        wait.until(expected_conditions.presence_of_element_located(Locators.Main.BUTTON_LOGIN)).click()
+        self.wait.until(expected_conditions.presence_of_element_located(Locators.Main.BUTTON_LOGIN)).click()
 
-        wait = WebDriverWait(self.webdriver, TIMEOUT)
-        wait.until(expected_conditions.presence_of_element_located(Locators.Login.INPUT_EMAIL)).send_keys(registered_account.email)
+        self.wait.until(expected_conditions.presence_of_element_located(Locators.Login.INPUT_EMAIL)).send_keys(registered_account.email)
 
         self.webdriver.find_element(*Locators.Login.INPUT_PASSWORD).send_keys(registered_account.password)
 
         form_login_element = self.webdriver.find_element(*Locators.Login.FORM_LOGIN)
 
-        wait = WebDriverWait(self.webdriver, TIMEOUT)
-        wait.until(expected_conditions.presence_of_element_located(Locators.Login.BUTTON_LOGIN)).click()
-
-        wait = WebDriverWait(self.webdriver, TIMEOUT)
-        wait.until(expected_conditions.staleness_of(form_login_element))
+        self.wait.until(expected_conditions.presence_of_element_located(Locators.Login.BUTTON_LOGIN)).click()
+        self.wait.until(expected_conditions.staleness_of(form_login_element))

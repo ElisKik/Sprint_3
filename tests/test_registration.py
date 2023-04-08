@@ -4,15 +4,14 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from account import Account
-from constants import TIMEOUT, PASSWORD_LENGTH_MIN
+from constants import PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
 
-def test_registration(webdriver: WebDriver, account: Account):
+def test_registration(webdriver: WebDriver, account: Account, wait: WebDriverWait):
     account.register()
 
-    wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_RECOVER_PASSWORD))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
@@ -20,7 +19,7 @@ def test_registration(webdriver: WebDriver, account: Account):
 
     assert url_actual == url_expected, 'Registration has failed'
 
-def test_registration_short_password_failed(webdriver: WebDriver):
+def test_registration_short_password_failed(webdriver: WebDriver, wait: WebDriverWait):
     webdriver.find_element(*Locators.Main.ANCHOR_ACCOUNT).click()
     webdriver.find_element(*Locators.Account.ANCHOR_REGISTER).click()
 
@@ -38,7 +37,6 @@ def test_registration_short_password_failed(webdriver: WebDriver):
 
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
-    wait = WebDriverWait(webdriver, TIMEOUT)
     found_elements = wait.until(expected_conditions.presence_of_all_elements_located(Locators.Registration.PARAGRAPH_PASSWORD_ERROR))
 
     assert len(found_elements) > 0, 'Invalid password caption was not found'
