@@ -34,8 +34,7 @@ def register_account(webdriver: WebDriver) -> RegisteredAccount:
 
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
-    if webdriver.current_url == url_before:
-        wait_page_loaded(webdriver, url_before)
+    wait_page_loaded(webdriver, url_before)
 
     return RegisteredAccount(name, email, password)
 
@@ -55,12 +54,10 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
 
     url_before_redirect = webdriver.current_url
 
-    if webdriver.current_url == url_before:
-        wait_page_loaded(webdriver, url_before)
+    wait_page_loaded(webdriver, url_before)
 
     url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
-    url_actual = webdriver.current_url
 
     # Handle possible redirect from /account to account/profile
-    if url_actual == url_before_redirect and not url_before_redirect == url_expected:
+    if not url_before_redirect == url_expected:
         wait_page_loaded(webdriver, url_before_redirect)

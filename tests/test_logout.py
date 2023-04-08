@@ -22,7 +22,6 @@ def test_logout(webdriver: WebDriver):
 
     wait_click(webdriver, Locators.Profile.BUTTON_LOGOUT)
 
-    if webdriver.current_url == url_before:
-        wait_page_loaded(webdriver, url_before)
+    wait_page_loaded(webdriver, url_before)
 
     assert webdriver.current_url == f'{Urls.BASE}/{Urls.LOGIN}'

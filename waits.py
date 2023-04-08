@@ -29,8 +29,9 @@ def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     in comparison to `current_url` given as an argument.
     """
 
-    wait = __wait_factory(webdriver)
-    wait.until(expected_conditions.url_changes(current_url))
+    if webdriver.current_url == current_url:
+        wait = __wait_factory(webdriver)
+        wait.until(expected_conditions.url_changes(current_url))
 
 def wait_visible(webdriver: WebDriver, locator: Locator) -> bool:
     """
