@@ -30,7 +30,4 @@ def test_logout(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Logout has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Logout has failed'

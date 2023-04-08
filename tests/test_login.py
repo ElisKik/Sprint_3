@@ -16,20 +16,14 @@ def test_login_main(webdriver: WebDriver):
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.BUTTON_LOGIN)).click()
 
     wait = WebDriverWait(webdriver, TIMEOUT)
-
-    wait.until(
-        expected_conditions.presence_of_element_located(
-        Locators.Account.ANCHOR_REGISTER)).click()
+    wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_REGISTER)).click()
 
     name = get_name()
     email = get_email()
     password = get_password()
 
     wait = WebDriverWait(webdriver, TIMEOUT)
-
-    wait.until(
-        expected_conditions.presence_of_element_located(
-        Locators.Registration.INPUT_NAME)).send_keys(name)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Registration.INPUT_NAME)).send_keys(name)
 
     webdriver.find_element(*Locators.Registration.INPUT_EMAIL).send_keys(email)
     webdriver.find_element(*Locators.Registration.INPUT_PASSWORD).send_keys(password)
@@ -62,10 +56,7 @@ def test_login_main(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Login with registered account has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Login with registered account has failed'
 
 def test_login_account(webdriver: WebDriver):
     registered_account = register_account(webdriver)
@@ -83,10 +74,7 @@ def test_login_account(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Login with registered account has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Login with registered account has failed'
 
 def test_login_registration(webdriver: WebDriver):
     registered_account = register_account(webdriver)
@@ -104,10 +92,7 @@ def test_login_registration(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Login with registered account has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Login with registered account has failed'
 
 def test_login_password_recovery(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
@@ -124,7 +109,4 @@ def test_login_password_recovery(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Login from password recovery page has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Login from password recovery page has failed'

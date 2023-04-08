@@ -18,10 +18,7 @@ def test_registration(webdriver: WebDriver):
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url
 
-    assert url_actual == url_expected, \
-           f'Registration has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
+    assert url_actual == url_expected, 'Registration has failed'
 
 def test_registration_short_password_failed(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
@@ -49,5 +46,4 @@ def test_registration_short_password_failed(webdriver: WebDriver):
     assert len(found_elements) > 0, 'Invalid password caption was not found'
     assert len(found_elements) == 1, 'Ambiguous results of searching for invalid password caption'
 
-    assert webdriver.current_url == f'{Urls.BASE}/{Urls.REGISTER}', \
-           'Page changed on invalid password entered'
+    assert webdriver.current_url == f'{Urls.BASE}/{Urls.REGISTER}', 'Page changed on invalid password entered'
