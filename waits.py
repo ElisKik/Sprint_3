@@ -44,6 +44,17 @@ def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     wait = __wait_factory(webdriver)
     wait.until(expected_conditions.url_changes(current_url))
 
+def wait_visible(webdriver: WebDriver, locator: Locator) -> bool:
+    """
+    Performs `visibility_of_element_located()`
+    via :class:`expected_conditions` and returns the result.
+    """
+
+    wait = __wait_factory(webdriver)
+    is_visible = wait.until(expected_conditions.visibility_of_element_located(locator))
+
+    return is_visible
+
 def wait_find_elements(webdriver: WebDriver, locator: Locator) -> List[WebElement]:
     """
     Performs `presence_of_all_elements_located()`

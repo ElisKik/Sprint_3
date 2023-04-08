@@ -4,9 +4,10 @@ import pytest
 
 from selenium.webdriver import Chrome as WebDriver
 
-from javascript import js_click, js_check_scrolled_into_view, js_wait_scrolled_into_view
+from javascript import js_click
 from locators import Locators
 from urls import Urls
+from waits import wait_visible
 
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
@@ -28,7 +29,6 @@ def test_go_to_constructor_from_header(webdriver: WebDriver):
     assert len(found_elements) > 0, 'Ingredients container was not found'
     assert len(found_elements) == 1, 'Ambiguous results of searching for ingredients container'
 
-
 @pytest.mark.parametrize(
     'ingredient_group',
     [
@@ -41,7 +41,7 @@ def test_go_to_constructor_from_header(webdriver: WebDriver):
         'sauces',
         'toppings',
     ])
-def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group):
+def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
     webdriver.get(Urls.BASE)
 
     js_click(webdriver, Locators.Header.ANCHOR_CONSTRUCTOR)
@@ -50,10 +50,8 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group):
         webdriver,
         Locators.Constructor.get_span_ingredient_group(ingredient_group))
 
-    js_wait_scrolled_into_view(
+    ingredient_group_visible = wait_visible(
         webdriver,
         Locators.Constructor.get_title_ingredient_group(ingredient_group))
 
-    assert js_check_scrolled_into_view(
-        webdriver,
-        Locators.Constructor.get_title_ingredient_group(ingredient_group))
+    assert ingredient_group_visible
