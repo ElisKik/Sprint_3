@@ -10,12 +10,10 @@ from urls import Urls
 from utils import register_account
 
 def test_registration(webdriver: WebDriver):
-    url_before = webdriver.current_url
     register_account(webdriver)
 
-    if webdriver.current_url == url_before:
-        wait = WebDriverWait(webdriver, TIMEOUT)
-        wait.until(expected_conditions.url_changes(url_before))
+    wait = WebDriverWait(webdriver, TIMEOUT)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_RECOVER_PASSWORD))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url
@@ -46,10 +44,7 @@ def test_registration_short_password_failed(webdriver: WebDriver):
     webdriver.find_element(*Locators.Registration.BUTTON_REGISTER).click()
 
     wait = WebDriverWait(webdriver, TIMEOUT)
-
-    found_elements = wait.until(
-        expected_conditions.presence_of_all_elements_located(
-            Locators.Registration.PARAGRAPH_PASSWORD_ERROR))
+    found_elements = wait.until(expected_conditions.presence_of_all_elements_located(Locators.Registration.PARAGRAPH_PASSWORD_ERROR))
 
     assert len(found_elements) > 0, 'Invalid password caption was not found'
     assert len(found_elements) == 1, 'Ambiguous results of searching for invalid password caption'

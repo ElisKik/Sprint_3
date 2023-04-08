@@ -55,9 +55,6 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
         webdriver.find_element(*Locators.Constructor.get_span_ingredient_group(ingredient_group)).click()
 
     wait = WebDriverWait(webdriver, TIMEOUT)
-
-    ingredient_group_visible = wait.until(
-        expected_conditions.visibility_of_element_located(
-            Locators.Constructor.get_title_ingredient_group(ingredient_group)))
+    ingredient_group_visible = wait.until(expected_conditions.visibility_of_element_located(Locators.Constructor.get_title_ingredient_group(ingredient_group)))
 
     assert ingredient_group_visible, f'Selected ingredient group {ingredient_group} is not visible'

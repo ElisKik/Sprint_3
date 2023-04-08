@@ -11,24 +11,21 @@ from utils import login, register_account
 def test_logout(webdriver: WebDriver):
     registered_account = register_account(webdriver)
 
+    webdriver.get(Urls.BASE)
+
     login(webdriver, registered_account)
 
-    url_expected = f'{Urls.BASE}/{Urls.PROFILE}'
-    url_actual = webdriver.current_url
+    wait = WebDriverWait(webdriver, TIMEOUT)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
-    assert url_actual == url_expected, \
-           f'Login with registered account has failed, URL\
-            \nexpected: {url_expected},\
-            \nactual: {url_actual}'
-
-    url_before = webdriver.current_url
+    wait = WebDriverWait(webdriver, TIMEOUT)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Profile.PARAGRAPH_DESCRIPTION))
 
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Profile.BUTTON_LOGOUT)).click()
 
-    if webdriver.current_url == url_before:
-        wait = WebDriverWait(webdriver, TIMEOUT)
-        wait.until(expected_conditions.url_changes(url_before))
+    wait = WebDriverWait(webdriver, TIMEOUT)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_RECOVER_PASSWORD))
 
     url_expected = f'{Urls.BASE}/{Urls.LOGIN}'
     url_actual = webdriver.current_url

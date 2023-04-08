@@ -102,6 +102,11 @@ class Locators:
         Button submits account login form.
         """
 
+        FORM_LOGIN: Locator = (By.XPATH, './/form[starts-with(@class,"Auth_form")]')
+        """
+        Form of login form page.
+        """
+
     class PasswordRecovery:
         """
         Locators of password recovery page.
@@ -151,4 +156,9 @@ class Locators:
         BUTTON_LOGOUT: Locator = (By.XPATH, './/main/div/nav/ul/li[3]/button')
         """
         Button performs logout.
+        """
+
+        PARAGRAPH_DESCRIPTION = (By.XPATH, './/p[starts-with(@class, "Account_text")]')
+        """
+        Account actions description.
         """
