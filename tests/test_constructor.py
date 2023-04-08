@@ -4,9 +4,12 @@ import pytest
 
 from selenium.webdriver import Chrome as WebDriver
 
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 from locators import Locators
 from urls import Urls
-from waits import wait_visible
 
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
     webdriver.get(Urls.BASE)
@@ -51,8 +54,10 @@ def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
     if len(selected_ingredient_groups) == 0:
         webdriver.find_element(*Locators.Constructor.get_span_ingredient_group(ingredient_group)).click()
 
-    ingredient_group_visible = wait_visible(
-        webdriver,
-        Locators.Constructor.get_title_ingredient_group(ingredient_group))
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+
+    ingredient_group_visible = wait.until(
+        expected_conditions.visibility_of_element_located(
+            Locators.Constructor.get_title_ingredient_group(ingredient_group)))
 
     assert ingredient_group_visible, f'Selected ingredient group {ingredient_group} is not visible'
