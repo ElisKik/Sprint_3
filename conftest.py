@@ -9,8 +9,6 @@ from typing import Iterable
 
 from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager as DriverManager
 
 from account import RegisteredAccount
 from utils import register_account
@@ -31,8 +29,7 @@ def webdriver() -> Iterable[WebDriver]:
     if is_headless:
         options.add_argument('--headless')
 
-    driverManager = DriverManager().install()
-    webdriver = WebDriver(service=Service(driverManager), options=options)
+    webdriver = WebDriver(options=options)
 
     if is_maximized:
         webdriver.maximize_window()
