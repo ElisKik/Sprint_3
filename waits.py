@@ -44,14 +44,6 @@ def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     wait = __wait_factory(webdriver)
     wait.until(expected_conditions.url_changes(current_url))
 
-def __wait_factory(webdriver: WebDriver) -> WebDriverWait:
-    """
-    Creates instance of :class:`WebDriverWait` with
-    constants `TIMEOUT` and `WAIT_POLL_FREQUENCY`
-    specified in this project.
-    """
-    return WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
-
 def wait_find_elements(webdriver: WebDriver, locator: Locator) -> List[WebElement]:
     """
     Performs `presence_of_all_elements_located()`
@@ -62,6 +54,14 @@ def wait_find_elements(webdriver: WebDriver, locator: Locator) -> List[WebElemen
     elements = wait.until(expected_conditions.presence_of_all_elements_located(locator))
 
     return elements
+
+def __wait_factory(webdriver: WebDriver) -> WebDriverWait:
+    """
+    Creates instance of :class:`WebDriverWait` with
+    constants `TIMEOUT` and `WAIT_POLL_FREQUENCY`
+    specified in this project.
+    """
+    return WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
 
 def __try_click(webdriver: WebDriver, locator: Locator) -> bool:
     element = webdriver.find_element(*locator)
