@@ -1,4 +1,4 @@
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from asserts import assert_element_exists
 from constants import PASSWORD_LENGTH_MIN

@@ -2,7 +2,7 @@
 Common functions reusable in several tests.
 """
 
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from account import RegisteredAccount
 from fakes import get_name, get_email, get_password

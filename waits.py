@@ -2,7 +2,7 @@
 Shortcuts for using :class:`selenium.webdriver.support.expected_conditions`
 """
 
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from selenium.webdriver.remote.errorhandler import ElementClickInterceptedException
 from selenium.webdriver.support import expected_conditions

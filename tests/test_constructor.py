@@ -2,7 +2,7 @@
 
 import pytest
 
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from asserts import assert_element_exists
 from javascript import js_click, js_check_scrolled_into_view, js_wait_scrolled_into_view

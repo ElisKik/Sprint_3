@@ -1,4 +1,4 @@
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from account import RegisteredAccount
 from asserts import assert_login

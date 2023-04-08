@@ -5,7 +5,7 @@ found with given locators.
 
 from os import path
 
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait

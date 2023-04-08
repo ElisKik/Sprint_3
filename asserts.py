@@ -2,7 +2,7 @@
 Common functions reusable in several tests.
 """
 
-from webdriver_resolver import WebDriver
+from selenium.webdriver import Chrome as WebDriver
 
 from selenium.common.exceptions import NoSuchElementException
 
