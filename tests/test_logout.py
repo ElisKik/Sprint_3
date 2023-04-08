@@ -1,9 +1,13 @@
 from selenium.webdriver import Chrome as WebDriver
 
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 from locators import Locators
 from urls import Urls
 from utils import login, register_account
-from waits import wait_click, wait_page_loaded
+from waits import wait_page_loaded
 
 def test_logout(webdriver: WebDriver):
     registered_account = register_account(webdriver)
@@ -20,7 +24,8 @@ def test_logout(webdriver: WebDriver):
 
     url_before = webdriver.current_url
 
-    wait_click(webdriver, Locators.Profile.BUTTON_LOGOUT)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Profile.BUTTON_LOGOUT)).click()
 
     wait_page_loaded(webdriver, url_before)
 

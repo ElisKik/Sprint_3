@@ -4,11 +4,15 @@ Common functions reusable in several tests.
 
 from selenium.webdriver import Chrome as WebDriver
 
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
 from account import RegisteredAccount
+from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
-from waits import wait_click, wait_page_loaded
+from waits import wait_page_loaded
 
 def register_account(webdriver: WebDriver) -> RegisteredAccount:
     """
@@ -46,11 +50,13 @@ def login(webdriver: WebDriver, registered_account: RegisteredAccount):
     webdriver.find_element(*Locators.Login.INPUT_EMAIL).send_keys(registered_account.email)
     webdriver.find_element(*Locators.Login.INPUT_PASSWORD).send_keys(registered_account.password)
 
-    wait_click(webdriver, Locators.Login.BUTTON_LOGIN)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Login.BUTTON_LOGIN)).click()
 
     url_before = webdriver.current_url
 
-    wait_click(webdriver, Locators.Main.ANCHOR_ACCOUNT)
+    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
+    wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 
     url_before_redirect = webdriver.current_url
 

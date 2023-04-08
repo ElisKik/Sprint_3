@@ -13,16 +13,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from aliases import Locator
 from constants import TIMEOUT, WAIT_POLL_FREQUENCY
 
-def wait_click(webdriver: WebDriver, locator: Locator) -> None:
-    """
-    Performs `presence_of_element_located()`
-    via :class:`expected_conditions`
-    and then `click()` via WebDriver.
-    """
-
-    wait = WebDriverWait(webdriver, TIMEOUT, WAIT_POLL_FREQUENCY)
-    wait.until(expected_conditions.presence_of_element_located(locator)).click()
-
 def wait_page_loaded(webdriver: WebDriver, current_url: str) -> None:
     """
     Waits for current URL of driver being changed
