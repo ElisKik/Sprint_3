@@ -3,15 +3,13 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from account import Account
 from constants import TIMEOUT
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
-from utils import register_account, login
 
 def test_login_main(webdriver: WebDriver):
-    webdriver.get(Urls.BASE)
-
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.BUTTON_LOGIN)).click()
 
@@ -58,12 +56,12 @@ def test_login_main(webdriver: WebDriver):
 
     assert url_actual == url_expected, 'Login with registered account has failed'
 
-def test_login_account(webdriver: WebDriver):
-    registered_account = register_account(webdriver)
+def test_login_account(webdriver: WebDriver, account: Account):
+    registered_account = account.register()
 
     webdriver.get(Urls.BASE)
 
-    login(webdriver, registered_account)
+    account.login(registered_account)
 
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
@@ -76,12 +74,12 @@ def test_login_account(webdriver: WebDriver):
 
     assert url_actual == url_expected, 'Login with registered account has failed'
 
-def test_login_registration(webdriver: WebDriver):
-    registered_account = register_account(webdriver)
+def test_login_registration(webdriver: WebDriver, account: Account):
+    registered_account = account.register()
 
     webdriver.get(Urls.BASE)
 
-    login(webdriver, registered_account)
+    account.login(registered_account)
 
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
@@ -95,8 +93,6 @@ def test_login_registration(webdriver: WebDriver):
     assert url_actual == url_expected, 'Login with registered account has failed'
 
 def test_login_password_recovery(webdriver: WebDriver):
-    webdriver.get(Urls.BASE)
-
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
 

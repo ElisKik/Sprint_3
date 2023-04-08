@@ -12,8 +12,6 @@ from locators import Locators
 from urls import Urls
 
 def test_go_to_constructor_from_logo(webdriver: WebDriver):
-    webdriver.get(Urls.BASE)
-
     webdriver.find_element(*Locators.Main.ANCHOR_LOGO).click()
 
     found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
@@ -22,8 +20,6 @@ def test_go_to_constructor_from_logo(webdriver: WebDriver):
     assert len(found_elements) == 1, 'Ambiguous results of searching for ingredients container'
 
 def test_go_to_constructor_from_header(webdriver: WebDriver):
-    webdriver.get(Urls.BASE)
-
     webdriver.find_element(*Locators.Header.ANCHOR_CONSTRUCTOR).click()
 
     found_elements = webdriver.find_elements(*Locators.Constructor.CONTAINER_INGREDIENTS)
@@ -44,8 +40,6 @@ def test_go_to_constructor_from_header(webdriver: WebDriver):
         'toppings',
     ])
 def test_go_to_ingredient_group(webdriver: WebDriver, ingredient_group: str):
-    webdriver.get(Urls.BASE)
-
     webdriver.find_element(*Locators.Header.ANCHOR_CONSTRUCTOR).click()
 
     selected_ingredient_groups = webdriver.find_elements(*Locators.Constructor.get_div_selected_ingredient_group(ingredient_group))

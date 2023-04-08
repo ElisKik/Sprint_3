@@ -3,14 +3,14 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from account import Account
 from constants import TIMEOUT, PASSWORD_LENGTH_MIN
 from fakes import get_name, get_email, get_password
 from locators import Locators
 from urls import Urls
-from utils import register_account
 
-def test_registration(webdriver: WebDriver):
-    register_account(webdriver)
+def test_registration(webdriver: WebDriver, account: Account):
+    account.register()
 
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Account.ANCHOR_RECOVER_PASSWORD))
@@ -21,8 +21,6 @@ def test_registration(webdriver: WebDriver):
     assert url_actual == url_expected, 'Registration has failed'
 
 def test_registration_short_password_failed(webdriver: WebDriver):
-    webdriver.get(Urls.BASE)
-
     webdriver.find_element(*Locators.Main.ANCHOR_ACCOUNT).click()
     webdriver.find_element(*Locators.Account.ANCHOR_REGISTER).click()
 

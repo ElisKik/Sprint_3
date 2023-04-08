@@ -3,17 +3,17 @@ from selenium.webdriver import Chrome as WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from account import Account
 from constants import TIMEOUT
 from locators import Locators
 from urls import Urls
-from utils import login, register_account
 
-def test_logout(webdriver: WebDriver):
-    registered_account = register_account(webdriver)
+def test_logout(webdriver: WebDriver, account: Account):
+    registered_account = account.register()
 
     webdriver.get(Urls.BASE)
 
-    login(webdriver, registered_account)
+    account.login(registered_account)
 
     wait = WebDriverWait(webdriver, TIMEOUT)
     wait.until(expected_conditions.presence_of_element_located(Locators.Main.ANCHOR_ACCOUNT)).click()
